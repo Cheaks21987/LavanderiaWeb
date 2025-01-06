@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.0.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db-lavanderiautp-1"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#454875" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#696969" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#B3B3F5"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="Pfecha1" class="java.lang.String"/>
+	<parameter name="Pfecha2" class="java.lang.String"/>
+	<parameter name="PidCliente" class="java.lang.Integer"/>
+	<parameter name="Pmonto1" class="java.lang.Double"/>
+	<parameter name="Pmonto2" class="java.lang.Double"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT SUBSTRING( "Comprobante".fecha,1,10),
+	"Servicio"."nombreServicio",
+	"Prenda"."nombrePrenda",
+	"ComprobanteServicio".subtotal
+FROM "ComprobanteServicio"
+	inner join "Comprobante" ON 
+	 "Comprobante"."idComprobante" = "ComprobanteServicio"."idComprobante" 
+	inner join "ComprobantePersona" ON 
+	 "ComprobantePersona"."IdComprobante" = "Comprobante"."idComprobante" 
+	inner join "Persona" ON 
+	 "Persona"."idPersona" = "ComprobantePersona"."IdPersona" 
+	inner join "Servicio" ON 
+	 "Servicio"."idServicio" = "ComprobanteServicio"."idServicio" 
+	inner join "Prenda" ON 
+	 "Prenda"."idPrenda" = "ComprobanteServicio"."idPrenda"
+	 ]]>
+	</queryString>
+	<field name="substring" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="substring"/>
+		<property name="com.jaspersoft.studio.field.label" value="substring"/>
+	</field>
+	<field name="nombreServicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreServicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreServicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Servicio"/>
+	</field>
+	<field name="nombrePrenda" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombrePrenda"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombrePrenda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Prenda"/>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="subtotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="subtotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ComprobanteServicio"/>
+	</field>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band height="94" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="215" y="0" width="399" height="62" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Lavanderia UTP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="198" y="53" width="429" height="22" uuid="f6a78448-8260-4445-a9e0-e3fb53b080d9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Reporte de servicios por categorias y tipos de servicio]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="55" y="15" width="695" height="1" uuid="e9d2002a-c8ee-4649-a258-640dad29110c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="111" y="0" width="80" height="15" forecolor="#050A6B" uuid="81b63ca5-3a43-4dff-8a32-64243da8ca09">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b98770e1-8ecc-4c43-b6d3-ddb4c35d7d75"/>
+				</reportElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="204" y="0" width="80" height="15" forecolor="#050A6B" uuid="fadba475-85ba-4932-9518-62f396f6bd83">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3118c8b5-4834-43af-bd1d-3401dfc1ddd6"/>
+				</reportElement>
+				<text><![CDATA[Prenda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="294" y="0" width="80" height="15" forecolor="#050A6B" uuid="2c85988f-ed90-42dd-87de-a4521c743957">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43a6d6c4-0d01-4b54-827e-2097a260e8f7"/>
+				</reportElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="384" y="0" width="80" height="15" forecolor="#050A6B" uuid="321cd054-5566-47b8-88b5-f8ca1306ca0f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="439d98f8-fcd3-4694-a3f7-df061b656c5f"/>
+				</reportElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="611" y="1" width="80" height="15" forecolor="#050A6B" uuid="520e65ce-2516-471d-9928-53b4511bf073">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff89fae9-66ff-490a-890e-04a9e4513d6b"/>
+				</reportElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="470" y="1" width="80" height="15" forecolor="#050A6B" uuid="250052ba-7df4-4b8d-8c2a-dba30340d158">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1932773a-48e3-4b0f-a95c-5dba59f7a983"/>
+				</reportElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="545" y="0" width="80" height="15" forecolor="#050A6B" uuid="8aa92992-63d6-49e8-a6b9-d5e759852812">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0e10ff51-eed6-4adf-8304-92970f7a3566"/>
+				</reportElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="55" y="0" width="695" height="15" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="568" y="0" width="80" height="15" uuid="bc3d7fa4-86f9-43be-b720-1886e892ebdd">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff89fae9-66ff-490a-890e-04a9e4513d6b"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="556" y="0" width="14" height="15" uuid="15273c42-60ba-4fa7-a1ca-c30eea54314e"/>
+					<text><![CDATA[S/.]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="55" y="0" width="695" height="4" uuid="fa5e88d5-a011-4e32-8f12-ce923f903111"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="572" y="2" width="61" height="30" uuid="429814d8-2800-4307-b083-62a7e0088284"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total  S/.]]></text>
+			</staticText>
+			<textField evaluationTime="Column">
+				<reportElement x="627" y="2" width="100" height="30" uuid="7615d5f5-31ef-461d-9de5-a947c66dfb0a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
